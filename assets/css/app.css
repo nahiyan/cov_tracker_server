@@ -3,3 +3,8 @@
 body {
     margin-top: 1em;
 }
+
+.map {
+    width: 100%;
+    height: 400px;
+}

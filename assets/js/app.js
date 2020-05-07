@@ -12,6 +12,7 @@ import 'phoenix_html'
 
 import '../scss/bulma.scss'
 import '../css/app.css'
+
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
