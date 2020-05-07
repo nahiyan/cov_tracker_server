@@ -1,0 +1,41 @@
+<h1 class="title">Registration</h1>
+<%= form_for @changeset, Routes.user_path(@conn, :register_submit), fn f -> %>
+    <div class="field">
+        <label class="label">NID Number:</label>
+        <div class="control">
+            <input class="input" name="username" type="number" placeholder="">
+        </div>
+        <p class="help">10-digit number of your National ID Card.</p>
+        <p class="has-text-danger"><%= error_tag f, :username %></p>
+    </div>
+    <div class="field">
+        <label class="label">Phone Number:</label>
+        <div class="control">
+            <input class="input" name="phone_number" type="number" placeholder="">
+        </div>
+        <p class="help">Cellphone number. Do not include country calling code such as "+880".</p>
+        <p class="has-text-danger"><%= error_tag f, :phone_number %></p>
+    </div>
+    <div class="field">
+        <label class="label">Password:</label>
+        <div class="control">
+            <input class="input" name="password" type="password" placeholder="">
+        </div>
+        <p class="help">Secret key for accessing this account. It is recommended to use a password generator.</p>
+        <p class="has-text-danger"><%= error_tag f, :password %></p>
+    </div>
+    <div class="field">
+        <label class="label">Password Again:</label>
+        <div class="control">
+            <input class="input" name="password_confirmation" type="password" placeholder="">
+        </div>
+        <p class="help">Repeat the password you typed in the field previous to this one.</p>
+        <p class="has-text-danger"><%= error_tag f, :password_confirmation %></p>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <input type="submit" class="button is-outlined is-success" value="Submit">
+        </div>
+    </div>
+<% end %>

@@ -53,7 +53,7 @@ defmodule CovTrackerServer.UserManager do
 
   """
   def create_user(attrs \\ %{}) do
-    %User{}
+    %User{type: 0}
     |> User.changeset(attrs)
     |> Repo.insert()
   end
@@ -106,19 +106,23 @@ defmodule CovTrackerServer.UserManager do
   end
 
   def authenticate_user(username, plain_text_password) do
-    query = from u in User, where: u.username == ^username
+    if username |> String.length() > 0 and plain_text_password |> String.length() > 0 do
+      query = from u in User, where: u.username == ^username
 
-    case Repo.one(query) do
-      nil ->
-        Argon2.no_user_verify()
-        {:error, :invalid_credentials}
+      case Repo.one(query) do
+        nil ->
+          Argon2.no_user_verify()
+          {:error, "No such NID number found."}
 
-      user ->
-        if Argon2.verify_pass(plain_text_password, user.password) do
-          {:ok, user}
-        else
-          {:error, :invalid_credentials}
-        end
+        user ->
+          if Argon2.verify_pass(plain_text_password, user.password) do
+            {:ok, user}
+          else
+            {:error, "Incorrect password."}
+          end
+      end
+    else
+      {:error, "Username/Password cannot be blank."}
     end
   end
 end

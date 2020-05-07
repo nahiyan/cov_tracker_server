@@ -1,0 +1,23 @@
+<h1 class="title">Login</h1>
+<%= form_for @changeset, Routes.user_path(@conn, :login_submit), fn _ -> %>
+    <div class="field">
+        <label class="label">NID Number:</label>
+        <div class="control">
+            <input class="input" name="username" type="text" placeholder="">
+        </div>
+        <p class="help">10-digit number of your National ID Card.</p>
+    </div>
+    <div class="field">
+        <label class="label">Password:</label>
+        <div class="control">
+            <input class="input" name="password" type="password" placeholder="">
+        </div>
+        <p class="help">Secret key for accessing this account.</p>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <input type="submit" class="button is-outlined is-success" value="Submit">
+        </div>
+    </div>
+<% end %>

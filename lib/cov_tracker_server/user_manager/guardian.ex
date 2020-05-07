@@ -1,5 +1,5 @@
 defmodule CovTrackerServer.UserManager.Guardian do
-  use Guardian, otp_app: :auth_me
+  use Guardian, otp_app: :cov_tracker_server
 
   alias CovTrackerServer.UserManager
 
