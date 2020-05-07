@@ -1,5 +1,7 @@
 defmodule CovTrackerServerWeb.RoomChannel do
   use Phoenix.Channel
+  alias CovTrackerServer.Repo
+  alias CovTrackerServer.Location
 
   def join("room:lobby", _message, socket) do
     {:ok, socket}
@@ -19,7 +21,14 @@ defmodule CovTrackerServerWeb.RoomChannel do
         },
         socket
       ) do
-    # broadcast!(socket, "new_msg", %{body: body})
+    Repo.insert(%Location{
+      altitude: altitude,
+      longitude: longitude,
+      latitude: latitude,
+      timestamp: timestamp,
+      user_id: 0
+    })
+
     {:noreply, socket}
   end
 end

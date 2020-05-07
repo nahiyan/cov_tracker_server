@@ -17,6 +17,10 @@ config :cov_tracker_server, CovTrackerServerWeb.Endpoint,
   render_errors: [view: CovTrackerServerWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: CovTrackerServer.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :cov_tracker_server, CovTrackerServer.UserManager.Guardian,
+  issuer: "cov_tracker_server",
+  secret_key: "w/xAqvjpjHeYUwv/BZQOO+UsMsOPANIe7+CXrZmvr0XZbGHo5fWE2tOBl43CQ1DD"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
