@@ -22,5 +22,25 @@
             zoom: 10,
             center: { lng: 90.4, lat: 23.8 }
         });
+
+        // Create a group that can hold map objects:
+        var group = new H.map.Group();
+
+        // Add the group to the map object (created earlier):
+        map.addObject(group);
+
+        // Create a marker:
+        marker = new H.map.Marker({ lng: 90.4, lat: 23.8 });
+
+        // Add the marker to the group (which causes
+        // it to be displayed on the map)
+        group.addObject(marker);
+
+        // Get the default map types from the Platform object:
+        var defaultLayers = platform.createDefaultLayers();
+
+        // Create the default UI:
+        var ui = H.ui.UI.createDefault(map, defaultLayers, 'en-US');
     }
 </script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>

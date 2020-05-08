@@ -23,6 +23,14 @@ defmodule CovTrackerServerWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # API
+  scope "/api", CovTrackerServerWeb do
+    pipe_through [:api]
+
+    get "/test", UserController, :test
+    get "/test_token/:token", UserController, :test_token
+  end
+
   # Maybe logged in routes
   scope "/", CovTrackerServerWeb do
     pipe_through [:browser, :auth]

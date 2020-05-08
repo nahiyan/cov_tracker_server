@@ -2,6 +2,7 @@ defmodule CovTrackerServerWeb.RoomChannel do
   use Phoenix.Channel
   alias CovTrackerServer.Repo
   alias CovTrackerServer.Location
+  alias CovTrackerServer.UserManager.Guardian
 
   def join("room:lobby", _message, socket) do
     {:ok, socket}
@@ -17,18 +18,24 @@ defmodule CovTrackerServerWeb.RoomChannel do
           "altitude" => altitude,
           "longitude" => longitude,
           "latitude" => latitude,
-          "timestamp" => timestamp
+          "timestamp" => timestamp,
+          "token" => token
         },
         socket
       ) do
-    Repo.insert(%Location{
-      altitude: altitude,
-      longitude: longitude,
-      latitude: latitude,
-      timestamp: timestamp,
-      user_id: 0
-    })
+    with {:ok, user, _} <- Guardian.resource_from_token(token) do
+      Repo.insert(%Location{
+        altitude: altitude,
+        longitude: longitude,
+        latitude: latitude,
+        timestamp: timestamp,
+        user_id: user.id
+      })
 
-    {:noreply, socket}
+      {:reply, {:ok, %{"fuck" => user.username}}, socket}
+    else
+      _ ->
+        {:reply, {:error, %{"reason" => "Unauthorized"}}, socket}
+    end
   end
 end

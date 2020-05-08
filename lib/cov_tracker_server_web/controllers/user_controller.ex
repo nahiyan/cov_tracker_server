@@ -53,4 +53,28 @@ defmodule CovTrackerServerWeb.UserController do
     |> Guardian.Plug.sign_out()
     |> redirect(to: "/login")
   end
+
+  def test(conn, _) do
+    with(
+      user <- UserManager.get_user!(1),
+      {:ok, token, _claims} <- Guardian.encode_and_sign(user)
+    ) do
+      render(conn, "test.json", token: token)
+    else
+      _ ->
+        render(conn, "test.json")
+    end
+  end
+
+  def test_token(conn, %{"token" => token}) do
+    with(
+      {:ok, claims} <- Guardian.decode_and_verify(token),
+      {:ok, user} <- Guardian.resource_from_claims(claims)
+    ) do
+      render(conn, "test.json", token: user.username)
+    else
+      _ ->
+        render(conn, "test.json")
+    end
+  end
 end
