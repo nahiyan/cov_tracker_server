@@ -1,12 +1,13 @@
 defmodule CovTrackerServerWeb.UserView do
   use CovTrackerServerWeb, :view
 
-  def render("test.json", params) do
-    with %{token: token} <- params.conn.assigns do
-      %{fuck: token}
-    else
-      _ ->
-        %{fuck: "me"}
+  def render("login.json", params) do
+    case params.conn.assigns do
+      %{token: token} ->
+        %{"token" => token}
+
+      %{error: error} ->
+        %{"error" => error}
     end
   end
 end

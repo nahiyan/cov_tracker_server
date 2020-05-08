@@ -54,27 +54,30 @@ defmodule CovTrackerServerWeb.UserController do
     |> redirect(to: "/login")
   end
 
-  def test(conn, _) do
-    with(
-      user <- UserManager.get_user!(1),
-      {:ok, token, _claims} <- Guardian.encode_and_sign(user)
-    ) do
-      render(conn, "test.json", token: token)
-    else
-      _ ->
-        render(conn, "test.json")
+  def api_login(conn, %{"username" => username, "password" => password}) do
+    case UserManager.authenticate_user(username, password) do
+      {:ok, user} ->
+        with {:ok, token, _} <- Guardian.encode_and_sign(user) do
+          render(conn, "login.json", token: token)
+        else
+          _ ->
+            render(conn, "login.json", error: "Failed to generate token.")
+        end
+
+      {:error, reason} ->
+        render(conn, "login.json", error: reason)
     end
   end
 
-  def test_token(conn, %{"token" => token}) do
-    with(
-      {:ok, claims} <- Guardian.decode_and_verify(token),
-      {:ok, user} <- Guardian.resource_from_claims(claims)
-    ) do
-      render(conn, "test.json", token: user.username)
-    else
-      _ ->
-        render(conn, "test.json")
-    end
-  end
+  # def test_token(conn, %{"token" => token}) do
+  #   with(
+  #     {:ok, claims} <- Guardian.decode_and_verify(token),
+  #     {:ok, user} <- Guardian.resource_from_claims(claims)
+  #   ) do
+  #     render(conn, "test.json", token: user.username)
+  #   else
+  #     _ ->
+  #       render(conn, "test.json")
+  #   end
+  # end
 end

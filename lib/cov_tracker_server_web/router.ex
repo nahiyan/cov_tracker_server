@@ -27,8 +27,7 @@ defmodule CovTrackerServerWeb.Router do
   scope "/api", CovTrackerServerWeb do
     pipe_through [:api]
 
-    get "/test", UserController, :test
-    get "/test_token/:token", UserController, :test_token
+    post "/login", UserController, :api_login
   end
 
   # Maybe logged in routes
