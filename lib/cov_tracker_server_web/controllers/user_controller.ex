@@ -10,16 +10,16 @@ defmodule CovTrackerServerWeb.UserController do
   end
 
   def login_submit(conn, %{"username" => username, "password" => password}) do
-    changeset = User.changeset(%User{}, %{})
-
     case UserManager.authenticate_user(username, password) do
       {:ok, user} ->
         conn
         |> put_flash(:success, "Login successful!")
         |> Guardian.Plug.sign_in(user)
-        |> render("login.html", changeset: changeset)
+        |> redirect(to: "/")
 
       {:error, reason} ->
+        changeset = User.changeset(%User{}, %{})
+
         conn
         |> put_flash(:error, to_string(reason))
         |> render("login.html", changeset: changeset)
@@ -35,11 +35,11 @@ defmodule CovTrackerServerWeb.UserController do
   def register_submit(conn, params) do
     case UserManager.create_user(params) do
       {:ok, _} ->
-        changeset = User.changeset(%User{}, %{})
+        # changeset = User.changeset(%User{}, %{})
 
         conn
         |> put_flash(:success, "Registration successful!")
-        |> render("register.html", changeset: changeset)
+        |> redirect(to: "/")
 
       {:error, changeset} ->
         conn

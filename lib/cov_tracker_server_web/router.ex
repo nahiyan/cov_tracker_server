@@ -1,5 +1,6 @@
 defmodule CovTrackerServerWeb.Router do
   use CovTrackerServerWeb, :router
+  import CovTrackerServerWeb.Plugs, only: [ensure_admin: 2]
 
   # Our pipeline implements "maybe" authenticated. We'll use the `:ensure_auth` below for when we need to make sure someone is logged in.
   pipeline :auth do
@@ -49,8 +50,12 @@ defmodule CovTrackerServerWeb.Router do
   # Definitely logged in scope
   scope "/", CovTrackerServerWeb do
     pipe_through [:browser, :auth, :ensure_auth]
+  end
 
-    get "/dashboard", DashboardController, :index
+  # Admin panel
+  scope "/admin", CovTrackerServerWeb do
+    pipe_through [:browser, :auth, :ensure_auth, :ensure_admin]
+    get "/", AdminController, :index
   end
 
   # Other scopes may use custom stacks.

@@ -5,6 +5,9 @@
         <a href="<%= Routes.user_path(@conn, :register) %>">Register</a>
     <% else %>
         Welcome back!
+        <%= if @is_admin do %>
+            <a href="<%= Routes.admin_path(@conn, :index) %>">Admin Panel</a>
+        <% end %>
         <a href="<%= Routes.user_path(@conn, :logout) %>">Logout</a>
     <% end %>
 </center>
