@@ -14,13 +14,20 @@
         // Obtain the default map types from the platform object
         var maptypes = platform.createDefaultLayers();
 
+        <%= case @center_location do %>
+        <% {_, _, longitude, latitude} -> %>
+            let centerLocation = { lng: <%= longitude %>, lat: <%= latitude %> }
+        <% _ -> %>
+            let centerLocation = { lng: 0, lat: 0 }
+        <% end %>
+
         // Instantiate (and display) a map object:
         var map = new H.Map(
         document.getElementById('mapContainer'),
         maptypes.vector.normal.map,
         {
             zoom: 10,
-            center: { lng: 90.4, lat: 23.8 }
+            center: centerLocation
         });
 
         // Create a group that can hold map objects:
@@ -30,11 +37,19 @@
         map.addObject(group);
 
         // Create a marker:
-        marker = new H.map.Marker({ lng: 90.4, lat: 23.8 });
+        <%# marker = new H.map.Marker({ lng: 90.4, lat: 23.8 }); %>
 
         // Add the marker to the group (which causes
         // it to be displayed on the map)
-        group.addObject(marker);
+        <%# group.addObject(marker); %>
+
+        <%=
+            if (@locations |> Enum.count() > 0) do
+                Enum.map(@locations, fn {_, _, longitude, latitude} ->
+                    "group.addObject(new H.map.Marker({ lng: " <> Decimal.to_string(longitude) <> ", lat: " <> Decimal.to_string(latitude) <> " }));"
+                end) |> Enum.reduce("", fn x, acc -> acc <> x <> "\n" end)
+            end
+        %>
 
         // Get the default map types from the Platform object:
         var defaultLayers = platform.createDefaultLayers();

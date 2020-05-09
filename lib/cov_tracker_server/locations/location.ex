@@ -1,4 +1,4 @@
-defmodule CovTrackerServer.Location do
+defmodule CovTrackerServer.Locations.Location do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -15,7 +15,7 @@ defmodule CovTrackerServer.Location do
   @doc false
   def changeset(location, attrs) do
     location
-    |> cast(attrs, [:user_id, :longitude, :latitude, :altitude, :timestamp])
-    |> validate_required([:user_id, :longitude, :latitude, :altitude, :timestamp])
+    |> cast(attrs, [:altitude, :latitude, :longitude, :timestamp, :user_id])
+    |> validate_required([:altitude, :latitude, :longitude, :timestamp, :user_id])
   end
 end

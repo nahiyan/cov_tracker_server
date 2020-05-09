@@ -1,7 +1,7 @@
 defmodule CovTrackerServerWeb.RoomChannel do
   use Phoenix.Channel
   alias CovTrackerServer.Repo
-  alias CovTrackerServer.Location
+  alias CovTrackerServer.Locations.Location
   alias CovTrackerServer.UserManager.Guardian
 
   def join("room:lobby", _message, socket) do
