@@ -28,6 +28,7 @@ defmodule CovTrackerServerWeb.Router do
     pipe_through [:api]
 
     post "/login", UserController, :api_login
+    post "/register", UserController, :api_register
   end
 
   # Maybe logged in routes

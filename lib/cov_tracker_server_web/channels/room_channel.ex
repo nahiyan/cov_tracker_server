@@ -32,7 +32,23 @@ defmodule CovTrackerServerWeb.RoomChannel do
         user_id: user.id
       })
 
-      {:reply, {:ok, %{"fuck" => user.username}}, socket}
+      {:reply, {:ok, %{}}, socket}
+    else
+      _ ->
+        {:reply, {:error, %{"reason" => "Unauthorized"}}, socket}
+    end
+  end
+
+  def handle_in(
+        "location_update",
+        %{
+          "test" => true,
+          "token" => token
+        },
+        socket
+      ) do
+    with {:ok, _, _} <- Guardian.resource_from_token(token) do
+      {:reply, {:ok, %{}}, socket}
     else
       _ ->
         {:reply, {:error, %{"reason" => "Unauthorized"}}, socket}
