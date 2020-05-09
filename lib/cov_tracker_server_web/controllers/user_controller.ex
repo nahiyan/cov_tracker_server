@@ -55,17 +55,22 @@ defmodule CovTrackerServerWeb.UserController do
   end
 
   def api_login(conn, %{"username" => username, "password" => password}) do
-    case UserManager.authenticate_user(username, password) do
-      {:ok, user} ->
-        with {:ok, token, _} <- Guardian.encode_and_sign(user) do
-          render(conn, "login.json", token: token)
-        else
-          _ ->
-            render(conn, "login.json", error: "Failed to generate token.")
-        end
+    with :error <- Integer.parse(username) do
+      render(conn, "login.json", error: "NID number can only contain characters from 0-9")
+    else
+      {usernameInteger, _} ->
+        case UserManager.authenticate_user(Integer.to_string(usernameInteger), password) do
+          {:ok, user} ->
+            with {:ok, token, _} <- Guardian.encode_and_sign(user) do
+              render(conn, "login.json", token: token)
+            else
+              _ ->
+                render(conn, "login.json", error: "Failed to generate token.")
+            end
 
-      {:error, reason} ->
-        render(conn, "login.json", error: reason)
+          {:error, reason} ->
+            render(conn, "login.json", error: reason)
+        end
     end
   end
 
