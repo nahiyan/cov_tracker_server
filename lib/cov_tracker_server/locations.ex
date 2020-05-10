@@ -18,7 +18,7 @@ defmodule CovTrackerServer.Locations do
 
   """
   def list_locations do
-    Repo.all(Location)
+    Repo.all(from(l in Location, order_by: [asc: l.id]))
   end
 
   @doc """

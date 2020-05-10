@@ -57,6 +57,8 @@ defmodule CovTrackerServerWeb.Router do
     pipe_through [:browser, :auth, :ensure_auth, :ensure_admin]
     get "/", AdminController, :index
     get "/users", UserController, :list
+    get "/users/infections", UserController, :infections
+    get "/locations", LocationController, :list
   end
 
   # Other scopes may use custom stacks.

@@ -199,6 +199,14 @@ defmodule CovTrackerServerWeb.UserController do
     |> redirect(to: "/login")
   end
 
+  def infections(conn, _params) do
+    infections = UserManager.list_infected_users()
+
+    conn
+    |> put_layout("admin.html")
+    |> render("infections.html", infections: infections)
+  end
+
   def api_login(conn, %{"username" => username, "password" => password}) do
     with :error <- Integer.parse(username) do
       render(conn, "login.json", error: "NID number can only contain characters from 0-9")

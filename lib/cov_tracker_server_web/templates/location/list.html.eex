@@ -1,0 +1,28 @@
+<h1 class="title">List of all locations</h1>
+
+<table class="table is-fullwidth is-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User NID Number</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%=
+        if Enum.count(@locations) > 0 do
+            Enum.map(@locations, fn %{id: id, user_nid_number: user_nid_number, latitude: latitude, longitude: longitude, timestamp: timestamp} ->
+                tr([
+                    Integer.to_string(id),
+                    Integer.to_string(user_nid_number),
+                    Decimal.to_string(latitude),
+                    Decimal.to_string(longitude),
+                    NaiveDateTime.to_string(timestamp)
+                ])
+            end)
+        end
+        %>
+    </tbody>
+</table>

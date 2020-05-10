@@ -24,6 +24,18 @@ defmodule CovTrackerServer.UserManager do
     Repo.all(from(u in User, order_by: [asc: u.id]))
   end
 
+  def list_infected_users do
+    query =
+      from(i in "infections",
+        left_join: u in "users",
+        on: u.id == i.user_id,
+        order_by: [asc: i.id],
+        select: %{id: i.id, user_nid_number: u.username, timestamp: i.timestamp}
+      )
+
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single user.
 

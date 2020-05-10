@@ -1,0 +1,24 @@
+<h1 class="title">List of infected users</h1>
+
+<table class="table is-fullwidth is-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User NID Number</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%=
+        if Enum.count(@infections) > 0 do
+            Enum.map(@infections, fn %{id: id, user_nid_number: user_nid_number, timestamp: timestamp} ->
+                tr([
+                    Integer.to_string(id),
+                    Integer.to_string(user_nid_number),
+                    NaiveDateTime.to_string(timestamp)
+                ])
+            end)
+        end
+        %>
+    </tbody>
+</table>

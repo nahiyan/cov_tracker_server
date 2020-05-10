@@ -1,5 +1,6 @@
 defmodule CovTrackerServerWeb.UserView do
   use CovTrackerServerWeb, :view
+  import CovTrackerServer.Aux, only: [tr: 1]
 
   def render("login.json", params) do
     case params.conn.assigns do
@@ -39,17 +40,6 @@ defmodule CovTrackerServerWeb.UserView do
 
         %{"status" => "error", "reasons" => reasons}
     end
-  end
-
-  def tr(content) do
-    tr_inner_html =
-      content
-      |> Enum.map(fn item ->
-        "<td>" <> (html_escape(item) |> safe_to_string()) <> "</td>"
-      end)
-      |> Enum.reduce("<tr>", fn x, acc -> acc <> x end)
-
-    (tr_inner_html <> "</tr>") |> raw()
   end
 
   def label_(label_code) do
