@@ -49,11 +49,11 @@ UserManager.create_user(%{
 end)
 |> (fn x -> Repo.insert_all(User, x) end).()
 
-1..100
+1..500
 |> Enum.map(fn _ ->
   %{
-    latitude: random(23.812142, 23.812378),
-    longitude: random(90.413166, 90.414432),
+    latitude: random(23.808668, 23.816442),
+    longitude: random(90.410763, 90.416299),
     altitude: 23.8,
     user_id: :rand.uniform(52),
     timestamp: add(utc_now(), -(:rand.uniform(60 * 60) - 1), :second) |> truncate(:second)
