@@ -21,7 +21,7 @@ defmodule CovTrackerServer.UserManager do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all(from(u in User, order_by: [asc: u.id]))
   end
 
   @doc """

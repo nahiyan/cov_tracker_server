@@ -35,7 +35,7 @@ UserManager.create_user(%{
   label: 0
 })
 
-1..20
+1..50
 |> Enum.map(fn x ->
   %{
     type: 0,
@@ -44,35 +44,33 @@ UserManager.create_user(%{
     phone_number: x,
     inserted_at: truncate(utc_now(), :second),
     updated_at: truncate(utc_now(), :second),
-    label: :rand.uniform(6) - 1
+    label: 0
   }
 end)
 |> (fn x -> Repo.insert_all(User, x) end).()
 
-# Left: 23.8459341,89.8137038
-# Bottom: 23.7294607,90.3779548
-# Top: 23.873957,90.3937476
-# Right: 23.8321309,90.4790433
-
-1..200
+1..100
 |> Enum.map(fn _ ->
   %{
-    latitude: random(23.7294607, 23.873957),
-    longitude: random(89.8137038, 90.4790433),
+    latitude: random(23.812142, 23.812378),
+    longitude: random(90.413166, 90.414432),
     altitude: 23.8,
-    user_id: :rand.uniform(22),
+    user_id: :rand.uniform(52),
     timestamp: add(utc_now(), -(:rand.uniform(60 * 60) - 1), :second) |> truncate(:second)
   }
 end)
 |> (fn x -> Repo.insert_all(Location, x) end).()
 
-1..5
-|> Enum.map(fn _ ->
+# Infections
+1..10
+|> Enum.map(fn i ->
   %{
-    user_id: :rand.uniform(22),
+    user_id: i,
     timestamp: add(utc_now(), -(:rand.uniform(60 * 60) - 1), :second) |> truncate(:second),
     inserted_at: truncate(utc_now(), :second),
     updated_at: truncate(utc_now(), :second)
   }
 end)
 |> (fn x -> Repo.insert_all(Infection, x) end).()
+
+# Implicitly add orange people

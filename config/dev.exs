@@ -73,3 +73,5 @@ config :cov_tracker_server, CovTrackerServer.Repo,
   database: "cov_tracker_server",
   hostname: "localhost",
   pool_size: 10
+
+config :logger, truncate: :infinity

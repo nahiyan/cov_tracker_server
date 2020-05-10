@@ -1,0 +1,5 @@
+<ul>
+<%= for %{user_id: user_id} <- @users do %>
+    <li><%= Integer.to_string(user_id) %></li>
+<% end %>
+</ul>

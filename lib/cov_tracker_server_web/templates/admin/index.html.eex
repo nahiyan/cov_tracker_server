@@ -18,7 +18,7 @@
         <% {_, _, longitude, latitude} -> %>
             let centerLocation = { lng: <%= longitude %>, lat: <%= latitude %> }
         <% _ -> %>
-            let centerLocation = { lng: 0, lat: 0 }
+            let centerLocation = { lng: 90.4, lat: 23.8 }
         <% end %>
 
         // Instantiate (and display) a map object:

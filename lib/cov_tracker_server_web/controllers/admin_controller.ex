@@ -21,8 +21,6 @@ defmodule CovTrackerServerWeb.AdminController do
 
     locations = Repo.all(query)
 
-    IO.inspect(locations |> Enum.count())
-
     center_location =
       with {:ok, location} <- Enum.fetch(locations, 0) do
         location
