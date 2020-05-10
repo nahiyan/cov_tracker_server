@@ -6,17 +6,18 @@ defmodule CovTrackerServerWeb.AdminController do
   import NaiveDateTime, only: [utc_now: 0, add: 3]
 
   def index(conn, _params) do
-    threshold = 1 * 24 * 60 * 60
-    now = add(utc_now(), -threshold, :second)
+    # Current threshold = 10 minutes
+    threshold = 10 * 60
+    threshold_time = add(utc_now(), -threshold, :second)
 
     query =
       from u in "users",
         left_join: l in "locations",
         on: u.id == l.user_id,
         distinct: u.id,
-        select: {u.id, l.inserted_at, l.longitude, l.latitude},
-        order_by: [desc: l.inserted_at],
-        where: l.inserted_at >= ^now
+        select: {u.id, l.timestamp, l.longitude, l.latitude},
+        order_by: [desc: l.timestamp],
+        where: l.timestamp >= ^threshold_time
 
     locations = Repo.all(query)
 

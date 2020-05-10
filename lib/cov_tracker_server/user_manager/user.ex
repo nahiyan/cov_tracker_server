@@ -8,6 +8,7 @@ defmodule CovTrackerServer.UserManager.User do
     field :password, :string
     field :phone_number, :integer
     field :type, :integer
+    field :label, :integer
 
     timestamps()
   end

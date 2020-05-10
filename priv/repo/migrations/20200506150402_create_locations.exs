@@ -7,9 +7,7 @@ defmodule CovTrackerServer.Repo.Migrations.CreateLocations do
       add :longitude, :decimal
       add :latitude, :decimal
       add :altitude, :decimal
-      add :timestamp, :bigint
-
-      timestamps()
+      add :timestamp, :naive_datetime
     end
   end
 end

@@ -4,6 +4,14 @@ defmodule CovTrackerServerWeb.UserController do
   alias CovTrackerServer.UserManager
   alias CovTrackerServer.UserManager.Guardian
 
+  def list(conn, _) do
+    users = UserManager.list_users()
+
+    conn
+    |> put_layout("admin.html")
+    |> render("list.html", users: users)
+  end
+
   def login(conn, _params) do
     changeset = User.changeset(%User{}, %{})
     render(conn, "login.html", changeset: changeset)

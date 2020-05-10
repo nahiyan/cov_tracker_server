@@ -24,15 +24,20 @@ defmodule CovTrackerServerWeb.RoomChannel do
         socket
       ) do
     with {:ok, user, _} <- Guardian.resource_from_token(token) do
-      Repo.insert(%Location{
-        altitude: altitude,
-        longitude: longitude,
-        latitude: latitude,
-        timestamp: timestamp,
-        user_id: user.id
-      })
+      with {:ok, datetime} <- DateTime.from_unix(timestamp, :millisecond) do
+        Repo.insert(%Location{
+          altitude: altitude,
+          longitude: longitude,
+          latitude: latitude,
+          timestamp: DateTime.to_naive(datetime) |> NaiveDateTime.truncate(:second),
+          user_id: user.id
+        })
 
-      {:reply, {:ok, %{}}, socket}
+        {:reply, {:ok, %{}}, socket}
+      else
+        _ ->
+          {:reply, {:error, %{"reason" => "Invalid timestamp"}}, socket}
+      end
     else
       _ ->
         {:reply, {:error, %{"reason" => "Unauthorized"}}, socket}

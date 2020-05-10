@@ -7,6 +7,7 @@ defmodule CovTrackerServer.Repo.Migrations.CreateUsers do
       add :password, :string
       add :type, :integer
       add :phone_number, :integer
+      add :label, :integer
 
       timestamps()
     end

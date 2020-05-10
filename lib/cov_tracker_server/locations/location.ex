@@ -6,10 +6,8 @@ defmodule CovTrackerServer.Locations.Location do
     field :altitude, :decimal
     field :latitude, :decimal
     field :longitude, :decimal
-    field :timestamp, :integer
+    field :timestamp, :naive_datetime
     field :user_id, :integer
-
-    timestamps()
   end
 
   @doc false

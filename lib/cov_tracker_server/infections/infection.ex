@@ -3,7 +3,7 @@ defmodule CovTrackerServer.Infections.Infection do
   import Ecto.Changeset
 
   schema "infections" do
-    field :timestamp, :utc_datetime
+    field :timestamp, :naive_datetime
     field :user_id, :integer
 
     timestamps()

@@ -32,7 +32,7 @@
                     <a class="navbar-item" href="<%= Routes.admin_path(@conn, :index) %>">
                         Location Updates
                     </a>
-                    <a class="navbar-item" href="<%= Routes.admin_path(@conn, :index) %>">
+                    <a class="navbar-item" href="<%= Routes.user_path(@conn, :list) %>">
                         Users
                     </a>
                     <a class="navbar-item" href="<%= Routes.admin_path(@conn, :index) %>">

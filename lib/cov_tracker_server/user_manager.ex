@@ -53,7 +53,7 @@ defmodule CovTrackerServer.UserManager do
 
   """
   def create_user(attrs \\ %{}) do
-    %User{type: 0}
+    %User{type: 0, label: 0}
     |> User.changeset(attrs)
     |> Repo.insert()
   end

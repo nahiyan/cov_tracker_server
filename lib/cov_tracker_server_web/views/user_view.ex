@@ -40,4 +40,40 @@ defmodule CovTrackerServerWeb.UserView do
         %{"status" => "error", "reasons" => reasons}
     end
   end
+
+  def tr(content) do
+    tr_inner_html =
+      content
+      |> Enum.map(fn item ->
+        "<td>" <> (html_escape(item) |> safe_to_string()) <> "</td>"
+      end)
+      |> Enum.reduce("<tr>", fn x, acc -> acc <> x end)
+
+    (tr_inner_html <> "</tr>") |> raw()
+  end
+
+  def label_(label_code) do
+    class =
+      case label_code do
+        0 ->
+          "gray"
+
+        1 ->
+          "red"
+
+        2 ->
+          "orange"
+
+        3 ->
+          "yellow"
+
+        4 ->
+          "pink"
+
+        5 ->
+          "black"
+      end
+
+    ("<span class='label " <> class <> "'></span>") |> raw()
+  end
 end

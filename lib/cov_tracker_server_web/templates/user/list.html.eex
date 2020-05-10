@@ -1,0 +1,30 @@
+<h1 class="title">List of all users</h1>
+
+<table class="table is-fullwidth is-hoverable is-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>NID Number</th>
+            <th>Phone Number</th>
+            <th>Label</th>
+            <th>Inserted At</th>
+            <th>Updated At</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%=
+        if Enum.count(@users) > 0 do
+            Enum.map(@users, fn user ->
+                tr([
+                        Integer.to_string(user.id),
+                        Integer.to_string(user.username),
+                        Integer.to_string(user.phone_number),
+                        label_(user.label),
+                        NaiveDateTime.to_string(user.inserted_at),
+                        NaiveDateTime.to_string(user.updated_at)
+                    ])
+            end)
+        end
+        %>
+    </tbody>
+</table>

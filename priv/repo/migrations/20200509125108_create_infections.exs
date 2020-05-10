@@ -4,10 +4,9 @@ defmodule CovTrackerServer.Repo.Migrations.CreateInfections do
   def change do
     create table(:infections) do
       add :user_id, :integer
-      add :timestamp, :utc_datetime
+      add :timestamp, :naive_datetime
 
       timestamps()
     end
-
   end
 end
