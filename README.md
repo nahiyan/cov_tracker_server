@@ -1,5 +1,11 @@
 # CovTrackerServer
 
+## Contributors
+- [Nahiyan Alamgir](https://github.com/nahiyan): Development and planning
+- [Momena Akhter Shukhi](https://github.com/MomenaAkhter): Testing and planning
+
+## Getting Started
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
